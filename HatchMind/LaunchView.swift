@@ -1,68 +1,99 @@
-//
-//  LaunchView.swift
-//  Hatch Mind
-//
-
 import SwiftUI
+import Combine
+import Network
 
 struct LaunchView: View {
-    @Binding var isFinished: Bool
 
     @State private var isVisible = true
-    @State private var bgPhase: CGFloat = 0       // background gradient drift
-    @State private var glowScale: CGFloat = 0.6   // pulsing glow ring (heartbeat)
+    @State private var bgPhase: CGFloat = 0
+    @State private var networkMonitor = NWPathMonitor()
+    @State private var glowScale: CGFloat = 0.6
     @State private var glowOpacity: Double = 0.0
-    @State private var eggScale: CGFloat = 0.3    // egg appears
+    @State private var eggScale: CGFloat = 0.3
     @State private var eggOpacity: Double = 0.0
+    @State private var cancellables = Set<AnyCancellable>()
     @State private var eggRotate: Double = -8
-    @State private var crackProgress: CGFloat = 0 // egg crack reveal
+    @State private var crackProgress: CGFloat = 0
     @State private var titleOpacity: Double = 0.0
     @State private var titleOffset: CGFloat = 14
     @State private var subOpacity: Double = 0.0
+    @StateObject private var viewModel = HatchMindViewModel()
     @State private var exitScale: CGFloat = 1.0
     @State private var exitOpacity: Double = 1.0
 
-    // floating particles
     @State private var particles: [Particle] = (0..<14).map { _ in Particle.random() }
     @State private var particleTime: CGFloat = 0
 
     var body: some View {
-        ZStack {
-            // Phase 1 - Animated warm gradient background
-            backgroundLayer
-
-            // Floating warm particles (midground)
-            particlesLayer
-
-            // Phase 2 - pulsing glow + egg + crack
+        NavigationView {
             ZStack {
-                pulsingGlow
-                eggIcon
-            }
-            .scaleEffect(exitScale)
-            .opacity(exitOpacity)
+                // Phase 1 - Animated warm gradient background
+                backgroundLayer
 
-            // Phase 3 - title
-            VStack {
-                Spacer()
-                VStack(spacing: 10) {
-                    Text("Hatch Mind")
-                        .font(.system(size: 40, weight: .heavy, design: .rounded))
-                        .foregroundColor(.hmTextPrimary)
-                        .opacity(titleOpacity)
-                        .offset(y: titleOffset)
+                // Floating warm particles (midground)
+                particlesLayer
 
-                    Text("Control incubation process")
-                        .font(.system(size: 16, weight: .medium, design: .rounded))
-                        .foregroundColor(.hmTextSecondary.opacity(0.85))
-                        .opacity(subOpacity)
+                // Phase 2 - pulsing glow + egg + crack
+                ZStack {
+                    pulsingGlow
+                    eggIcon
                 }
-                .padding(.bottom, 90)
+                .scaleEffect(exitScale)
                 .opacity(exitOpacity)
+                
+                NavigationLink(
+                    destination: HatchMindWebView().navigationBarHidden(true),
+                    isActive: $viewModel.navigateToWeb
+                ) { EmptyView() }
+                
+                NavigationLink(
+                    destination: RootView().navigationBarBackButtonHidden(true),
+                    isActive: $viewModel.navigateToMain
+                ) { EmptyView() }
+
+                // Phase 3 - title
+                VStack {
+                    Spacer()
+                    VStack(spacing: 10) {
+                        Text("Hatch Mind")
+                            .font(.system(size: 40, weight: .heavy, design: .rounded))
+                            .foregroundColor(.hmTextPrimary)
+                            .opacity(titleOpacity)
+                            .offset(y: titleOffset)
+
+                        Text("Control incubation process")
+                            .font(.system(size: 16, weight: .medium, design: .rounded))
+                            .foregroundColor(.hmTextSecondary.opacity(0.85))
+                            .opacity(subOpacity)
+                    }
+                    .padding(.bottom, 90)
+                    .opacity(exitOpacity)
+                }
+                
+                if viewModel.showOfflineView {
+                    VStack {
+                        Spacer()
+                        Image("error")
+                            .resizable()
+                            .frame(width: 200, height: 150)
+                        Spacer()
+                        HStack {
+                            Spacer()
+                        }
+                    }
+                    .background(
+                        Color.black
+                            .opacity(0.7)
+                    )
+                }
+            }
+            .onAppear { runAnimation() }
+            .onDisappear { stopAllAnimations() }
+            .fullScreenCover(isPresented: $viewModel.showPermissionPrompt) {
+                HatchMindConsentView(viewModel: viewModel)
             }
         }
-        .onAppear { runAnimation() }
-        .onDisappear { stopAllAnimations() }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 
     // MARK: - Background gradient layer
@@ -172,16 +203,41 @@ struct LaunchView: View {
         .opacity(eggOpacity)
         .rotationEffect(.degrees(eggRotate))
     }
+    
+    private func setupStream1() {
+        NotificationCenter.default.publisher(for: Notification.Name("ConversionDataReceived"))
+            .compactMap { $0.userInfo?["conversionData"] as? [String: Any] }
+            .sink { data in
+                viewModel.ingestAttribution(data)
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func setupStream2() {
+        NotificationCenter.default.publisher(for: Notification.Name("deeplink_values"))
+            .compactMap { $0.userInfo?["deeplinksData"] as? [String: Any] }
+            .sink { data in
+                viewModel.ingestDeeplinks(data)
+            }
+            .store(in: &cancellables)
+    }
 
     // MARK: - Animation runner
     private func runAnimation() {
         isVisible = true
+        
+        setupNetworkMonitoring()
 
         // Phase 1: 0 - 0.6s — background drift starts (loop)
         withAnimation(.linear(duration: 6.0).repeatForever(autoreverses: true)) {
             bgPhase = 1.0
         }
 
+        
+        setupStream1()
+        setupStream2()
+        viewModel.boot()
+        
         // particles continuous loop
         withAnimation(.linear(duration: 8.0).repeatForever(autoreverses: false)) {
             particleTime = 1.0
@@ -206,7 +262,16 @@ struct LaunchView: View {
                 eggRotate = 4
             }
         }
-
+        
+        func setupNetworkMonitoring() {
+            networkMonitor.pathUpdateHandler = { path in
+                Task { @MainActor in
+                    viewModel.networkConnectivityChanged(path.status == .satisfied)
+                }
+            }
+            networkMonitor.start(queue: .global(qos: .background))
+        }
+        
         // Crack reveal
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.1) {
             guard isVisible else { return }
@@ -224,18 +289,6 @@ struct LaunchView: View {
             }
             withAnimation(.easeOut(duration: 0.5).delay(0.25)) {
                 subOpacity = 1.0
-            }
-        }
-
-        // Phase 4: 2.2 - 2.5s — exit
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-            guard isVisible else { return }
-            withAnimation(.spring(response: 0.55, dampingFraction: 0.85)) {
-                exitScale = 1.5
-                exitOpacity = 0.0
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
-                isFinished = true
             }
         }
     }
@@ -258,7 +311,6 @@ struct LaunchView: View {
     }
 }
 
-// MARK: - Egg shape
 struct EggShape: Shape {
     func path(in rect: CGRect) -> Path {
         var path = Path()
@@ -281,7 +333,6 @@ struct EggShape: Shape {
     }
 }
 
-// MARK: - Crack shape
 struct CrackShape: Shape {
     var progress: CGFloat
     var animatableData: CGFloat {
@@ -312,7 +363,6 @@ struct CrackShape: Shape {
     }
 }
 
-// MARK: - Triangle (beak)
 struct Triangle: Shape {
     func path(in rect: CGRect) -> Path {
         var p = Path()
@@ -324,7 +374,6 @@ struct Triangle: Shape {
     }
 }
 
-// MARK: - Particle
 struct Particle: Identifiable {
     let id = UUID()
     let x: CGFloat
@@ -340,4 +389,8 @@ struct Particle: Identifiable {
                  speed: CGFloat.random(in: 0.4...1.2),
                  opacity: Double.random(in: 0.25...0.55))
     }
+}
+
+#Preview {
+    LaunchView()
 }

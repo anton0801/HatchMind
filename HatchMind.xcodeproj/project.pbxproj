@@ -7,15 +7,51 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F798E5C2FC71A91004F6F82 /* AdjustSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 8F798E5B2FC71A91004F6F82 /* AdjustSdk */; };
+		8F798E5F2FC71AB0004F6F82 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 8F798E5E2FC71AB0004F6F82 /* FirebaseMessaging */; };
+		8F798E772FC741DF004F6F82 /* PushService.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8F798E702FC741DF004F6F82 /* PushService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8F798E7F2FC741EA004F6F82 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 8F798E7E2FC741EA004F6F82 /* FirebaseMessaging */; };
 		8FB14D242FBF3CD8005F595E /* codemagic.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 8FB14D232FBF3CD8005F595E /* codemagic.yaml */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		8F798E752FC741DF004F6F82 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8F9FA1062FACC72A0089B2B9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8F798E6F2FC741DF004F6F82;
+			remoteInfo = PushService;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8F798E7C2FC741DF004F6F82 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				8F798E772FC741DF004F6F82 /* PushService.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		8F798E702FC741DF004F6F82 /* PushService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PushService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F9FA10E2FACC72A0089B2B9 /* HatchMind.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HatchMind.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FB14D232FBF3CD8005F595E /* codemagic.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = codemagic.yaml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		8F798E7B2FC741DF004F6F82 /* Exceptions for "PushService" folder in "PushService" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 8F798E6F2FC741DF004F6F82 /* PushService */;
+		};
 		8F9FA11E2FACC7430089B2B9 /* Exceptions for "HatchMind" folder in "HatchMind" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -26,6 +62,14 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		8F798E712FC741DF004F6F82 /* PushService */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				8F798E7B2FC741DF004F6F82 /* Exceptions for "PushService" folder in "PushService" target */,
+			);
+			path = PushService;
+			sourceTree = "<group>";
+		};
 		8F9FA1102FACC72A0089B2B9 /* HatchMind */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -37,21 +81,40 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		8F798E6D2FC741DF004F6F82 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8F798E7F2FC741EA004F6F82 /* FirebaseMessaging in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8F9FA10B2FACC72A0089B2B9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F798E5F2FC71AB0004F6F82 /* FirebaseMessaging in Frameworks */,
+				8F798E5C2FC71A91004F6F82 /* AdjustSdk in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8F798E7D2FC741EA004F6F82 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		8F9FA1052FACC72A0089B2B9 = {
 			isa = PBXGroup;
 			children = (
 				8FB14D232FBF3CD8005F595E /* codemagic.yaml */,
 				8F9FA1102FACC72A0089B2B9 /* HatchMind */,
+				8F798E712FC741DF004F6F82 /* PushService */,
+				8F798E7D2FC741EA004F6F82 /* Frameworks */,
 				8F9FA10F2FACC72A0089B2B9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -60,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				8F9FA10E2FACC72A0089B2B9 /* HatchMind.app */,
+				8F798E702FC741DF004F6F82 /* PushService.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -67,6 +131,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		8F798E6F2FC741DF004F6F82 /* PushService */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8F798E782FC741DF004F6F82 /* Build configuration list for PBXNativeTarget "PushService" */;
+			buildPhases = (
+				8F798E6C2FC741DF004F6F82 /* Sources */,
+				8F798E6D2FC741DF004F6F82 /* Frameworks */,
+				8F798E6E2FC741DF004F6F82 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				8F798E712FC741DF004F6F82 /* PushService */,
+			);
+			name = PushService;
+			packageProductDependencies = (
+				8F798E7E2FC741EA004F6F82 /* FirebaseMessaging */,
+			);
+			productName = PushService;
+			productReference = 8F798E702FC741DF004F6F82 /* PushService.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		8F9FA10D2FACC72A0089B2B9 /* HatchMind */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8F9FA11A2FACC72D0089B2B9 /* Build configuration list for PBXNativeTarget "HatchMind" */;
@@ -74,16 +161,20 @@
 				8F9FA10A2FACC72A0089B2B9 /* Sources */,
 				8F9FA10B2FACC72A0089B2B9 /* Frameworks */,
 				8F9FA10C2FACC72A0089B2B9 /* Resources */,
+				8F798E7C2FC741DF004F6F82 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				8F798E762FC741DF004F6F82 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				8F9FA1102FACC72A0089B2B9 /* HatchMind */,
 			);
 			name = HatchMind;
 			packageProductDependencies = (
+				8F798E5B2FC71A91004F6F82 /* AdjustSdk */,
+				8F798E5E2FC71AB0004F6F82 /* FirebaseMessaging */,
 			);
 			productName = HatchMind;
 			productReference = 8F9FA10E2FACC72A0089B2B9 /* HatchMind.app */;
@@ -99,6 +190,9 @@
 				LastSwiftUpdateCheck = 1640;
 				LastUpgradeCheck = 1640;
 				TargetAttributes = {
+					8F798E6F2FC741DF004F6F82 = {
+						CreatedOnToolsVersion = 16.4;
+					};
 					8F9FA10D2FACC72A0089B2B9 = {
 						CreatedOnToolsVersion = 16.4;
 						LastSwiftMigration = 1640;
@@ -114,17 +208,29 @@
 			);
 			mainGroup = 8F9FA1052FACC72A0089B2B9;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				8F798E5A2FC71A91004F6F82 /* XCRemoteSwiftPackageReference "ios_sdk" */,
+				8F798E5D2FC71AB0004F6F82 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8F9FA10F2FACC72A0089B2B9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				8F9FA10D2FACC72A0089B2B9 /* HatchMind */,
+				8F798E6F2FC741DF004F6F82 /* PushService */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		8F798E6E2FC741DF004F6F82 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8F9FA10C2FACC72A0089B2B9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -136,6 +242,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		8F798E6C2FC741DF004F6F82 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8F9FA10A2FACC72A0089B2B9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -145,7 +258,76 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		8F798E762FC741DF004F6F82 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8F798E6F2FC741DF004F6F82 /* PushService */;
+			targetProxy = 8F798E752FC741DF004F6F82 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		8F798E792FC741DF004F6F82 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PushService/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PushService;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mindsofhatchapp.HatchMind.PushService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8F798E7A2FC741DF004F6F82 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PushService/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PushService;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mindsofhatchapp.HatchMind.PushService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		8F9FA1182FACC72D0089B2B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -274,6 +456,7 @@
 				INFOPLIST_FILE = HatchMind/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Hatch Mind";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need your permission to use this feature in application.";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "Hatch Mind uses tracking data to improve app functionality, optimize performance, analyze user interaction with features, and provide a smoother and more personalized experience. This information also helps support app reliability, security, and ongoing service improvements.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -288,7 +471,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.3;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mindsofhatchapp.HatchMind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -317,6 +500,7 @@
 				INFOPLIST_FILE = HatchMind/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Hatch Mind";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need your permission to use this feature in application.";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "Hatch Mind uses tracking data to improve app functionality, optimize performance, analyze user interaction with features, and provide a smoother and more personalized experience. This information also helps support app reliability, security, and ongoing service improvements.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -331,7 +515,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.3;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mindsofhatchapp.HatchMind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -348,6 +532,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		8F798E782FC741DF004F6F82 /* Build configuration list for PBXNativeTarget "PushService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8F798E792FC741DF004F6F82 /* Debug */,
+				8F798E7A2FC741DF004F6F82 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		8F9FA1092FACC72A0089B2B9 /* Build configuration list for PBXProject "HatchMind" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -367,6 +560,43 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8F798E5A2FC71A91004F6F82 /* XCRemoteSwiftPackageReference "ios_sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/adjust/ios_sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		8F798E5D2FC71AB0004F6F82 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.14.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8F798E5B2FC71A91004F6F82 /* AdjustSdk */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8F798E5A2FC71A91004F6F82 /* XCRemoteSwiftPackageReference "ios_sdk" */;
+			productName = AdjustSdk;
+		};
+		8F798E5E2FC71AB0004F6F82 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8F798E5D2FC71AB0004F6F82 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		8F798E7E2FC741EA004F6F82 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8F798E5D2FC71AB0004F6F82 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8F9FA1062FACC72A0089B2B9 /* Project object */;
 }

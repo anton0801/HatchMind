@@ -1,12 +1,16 @@
-//
-//  Models.swift
-//  Hatch Mind
-//
-
 import Foundation
 import SwiftUI
 
-// MARK: - Bird Type
+struct ShellConstants {
+    static let appCode = "6771778106"
+    static let adjustAppToken = "c10uzlrty70g"
+    static let suiteShell    = "group.hatchmind.shell"
+    static let cookieYolk    = "hatchmind_yolk"
+    static let backendNursery = "https://hatchmiind.com/config.php"
+    static let logEgg        = "🥚 [HatchMind]"
+    static let plistFile     = "hm_shell_plist.xml"
+}
+
 enum BirdType: String, Codable, CaseIterable, Identifiable {
     case chicken = "Chicken"
     case duck = "Duck"
@@ -62,7 +66,17 @@ enum BirdType: String, Codable, CaseIterable, Identifiable {
     }
 }
 
-// MARK: - Incubation
+struct ShellRecord: Codable {
+    let beacons: [String: String]
+    let crumbs: [String: String]
+    let yolkURL: String?
+    let yolkMode: String?
+    let unincubated: Bool
+    let consentTucked: Bool
+    let consentChilled: Bool
+    let consentImprintedAt: Date?
+}
+
 struct Incubation: Identifiable, Codable, Equatable {
     var id: UUID = UUID()
     var name: String
@@ -97,7 +111,13 @@ struct Incubation: Identifiable, Codable, Equatable {
     }
 }
 
-// MARK: - Development Stage
+enum HatchOutcome {
+    case incubating
+    case requestConsent
+    case openYolk
+    case nestedInRoost
+}
+
 struct DevelopmentStage: Identifiable, Equatable {
     let id = UUID()
     let title: String
@@ -130,6 +150,44 @@ struct DevelopmentStage: Identifiable, Equatable {
                              description: "Stop turning. Increase humidity. Chick positions for hatching.",
                              symbol: "egg.fill")
         ]
+    }
+}
+
+enum HatchFault: Int, Error, RawRepresentable {
+    
+    case shellEmpty = 1001
+    case malformedCrack = 1002
+    
+    case wireSnapped = 2001
+    case heatLost = 2002
+    case feedClogged = 2003
+    
+    case nestSealed = 3001
+    case incubatorRejected = 3002
+    case voltageStaled = 3003
+    
+    var category: String {
+        switch self.rawValue / 1000 {
+        case 1: return "soft"
+        case 2: return "network"
+        case 3: return "denial"
+        default: return "unknown"
+        }
+    }
+    
+    var retryable: Bool { category == "network" }
+    
+    var label: String {
+        switch self {
+        case .shellEmpty:          return "shellEmpty"
+        case .malformedCrack:      return "malformedCrack"
+        case .wireSnapped:         return "wireSnapped"
+        case .heatLost:            return "heatLost"
+        case .feedClogged:         return "feedClogged"
+        case .nestSealed:          return "nestSealed"
+        case .incubatorRejected:   return "incubatorRejected"
+        case .voltageStaled:       return "voltageStaled"
+        }
     }
 }
 
@@ -291,4 +349,13 @@ struct UserProfile: Codable, Equatable {
                                   farmName: "Sunny Coop",
                                   email: "demo@hatchmind.app",
                                   bio: "Raising healthy poultry one batch at a time.")
+}
+
+struct ShellKey {
+    static let yolkURL  = "hm_yolk_url"
+    static let yolkMode = "hm_yolk_mode"
+    static let primed   = "hm_primed"
+    static let pushURL = "temp_url"
+    static let fcm     = "fcm_token"
+    static let push    = "push_token"
 }
