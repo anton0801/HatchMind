@@ -61,7 +61,7 @@ struct LaunchView: View {
                             .opacity(titleOpacity)
                             .offset(y: titleOffset)
 
-                        Text("Control incubation process")
+                        Text("Loading app...")
                             .font(.system(size: 16, weight: .medium, design: .rounded))
                             .foregroundColor(.hmTextSecondary.opacity(0.85))
                             .opacity(subOpacity)
